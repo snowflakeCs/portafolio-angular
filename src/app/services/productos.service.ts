@@ -20,7 +20,10 @@ export class ProductosService {
 
     this.http.get('https://angular-html-db4c9.firebaseio.com/productos_idx.json')
       .subscribe( (resp: ProductoInterface[]) => {
-        console.log(resp);
+        //console.log(resp);
+        this.cargando=false;
+        this.productos=resp;
+
       } );
   }
 
