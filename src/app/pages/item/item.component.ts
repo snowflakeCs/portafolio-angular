@@ -9,19 +9,21 @@ import { ProductoDescripcion } from 'src/app/interfaces/producto-descripcion.int
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
+  producto: ProductoDescripcion;
 
   constructor( private route: ActivatedRoute,
-              public productosService: ProductosService) { }
+              public productoService: ProductosService) { }
 
   ngOnInit() {
 
     this.route.params
       .subscribe( parametros =>{
         //console.log(parametros);
-        this.productosService.getProducto(parametros['id'])
+        this.productoService.getProducto(parametros['id'])
         .subscribe((producto: ProductoDescripcion)  => {
+          this.producto=producto;
           console.log(producto);
-        })
+        });
 
       });
 
