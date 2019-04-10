@@ -8,8 +8,9 @@ import { ProductoInterface } from '../interfaces/producto.interface';
 })
 export class ProductosService {
   
-  cargando= true;
+  cargando = true;
   productos: ProductoInterface[]= [];
+  productoFiltrado: ProductoInterface[]= [];
 
   constructor( private http: HttpClient) { 
 
@@ -21,14 +22,22 @@ export class ProductosService {
     this.http.get('https://angular-html-db4c9.firebaseio.com/productos_idx.json')
       .subscribe( (resp: ProductoInterface[]) => {
         //console.log(resp);
-        this.cargando=false;
-        this.productos=resp;
+        this.cargando = false;
+        this.productos = resp;
 
       } );
   }
 
-  public getProducto( id: string){
+   getProducto( id: string){
     return this.http.get('https://angular-html-db4c9.firebaseio.com/productos/${id}.json')
+  }
+
+  buscarProducto( termino: string){
+    this.productoFiltrado = this.productos.filter( producto => {
+      return true;
+    });
+
+    console.log( this.productoFiltrado);
   }
 
 }
