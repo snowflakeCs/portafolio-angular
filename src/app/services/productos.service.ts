@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductoInterface } from '../interfaces/producto.interface';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,13 +20,16 @@ export class ProductosService {
 
   private cargarProductos(){
 
-    this.http.get('https://angular-html-db4c9.firebaseio.com/productos_idx.json')
+    return new Promise ( ( resolve , reject ) => {
+      this.http.get('https://angular-html-db4c9.firebaseio.com/productos_idx.json')
       .subscribe( (resp: ProductoInterface[]) => {
         //console.log(resp);
         this.cargando = false;
         this.productos = resp;
-
+        resolve();
       } );
+    })
+    
   }
 
    getProducto( id: string){
@@ -33,11 +37,30 @@ export class ProductosService {
   }
 
   buscarProducto( termino: string){
-    this.productoFiltrado = this.productos.filter( producto => {
-      return true;
-    });
-
-    console.log( this.productoFiltrado);
+    if ( this.productos.length === 0){
+      this.cargarProductos().then(()=>{
+        //ejecturar despues de tener productos
+        //aplicar filtro
+        this.filtrarProductos(termino);
+      });
+    
+    }else {
+      //aplicar filtro
+      this.filtrarProductos(termino);
+    }
   }
+
+private filtrarProductos( termino: string) {
+
+  console.log(this.productos);
+  this.productoFiltrado = [];
+  
+  this.productos.forEach( prod =>{
+
+    if (prod.categoria.indexOf( termino) >= 0){
+      this.productoFiltrado.push(prod);
+    }
+  })
+}
 
 }
