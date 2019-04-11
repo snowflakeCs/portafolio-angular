@@ -21,12 +21,13 @@ export class InfoPaginaService {
     
 
   private cargarInfo(){
+    //leer archivo json
     this.http.get('assets/data/data-pagina.json')
       .subscribe( (resp: InfoPagina) => {
 
         this.cargada = true;
         this.info = resp;
-9
+
       });
   }
 
@@ -36,7 +37,7 @@ export class InfoPaginaService {
     .subscribe( (resp: any[]) => {
 
       this.equipo = resp;
-      console.log( resp); // (resp['twitter'])
+      //console.log( resp); // (resp['twitter'])
 
     });
   }

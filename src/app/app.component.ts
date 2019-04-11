@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'portafolio';
 
   constructor( public infoPaginaService: InfoPaginaService,
-              public productosService: ProductosService){
+               public productosService: ProductosService){
     
   }
 
